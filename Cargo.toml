@@ -1,0 +1,34 @@
+[package]
+name = "color-operators"
+version = "0.0.1"
+authors = ["S0AndS0 <strangerthanbland@gmail.com>"]
+edition = "2018"
+license = "AGPL-3.0"
+description = "Color data structures, converters, and arithmetic operators"
+homepage = "https://github.com/rust-utilities/color-operators"
+readme = ".github/README.md"
+repository = "https://github.com/rust-utilities/color-operators"
+keywords = []
+categories = []
+
+
+exclude = [ "*" ]
+
+include = [
+  "**/*.rs",
+  "Cargo.toml",
+  ".github/README.md",
+  "LICENSE",
+]
+
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+
+[dependencies]
+hex = "0.4.3"
+json = "0.12.4"
+
+
+[dev-dependencies]
+argparse = "0.2.2"
