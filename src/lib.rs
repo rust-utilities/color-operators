@@ -4,26 +4,50 @@
 
 
 //! A library for converting, comparing, and preforming arithmetic on colors
+//!
+//! # Example
+//!
+//! ```rust
+//! use color_operators::color::Color;
+//! use color_operators::hsl::HSL;
+//! use color_operators::hsv::HSV;
+//! use color_operators::rgb::RGB;
+//!
+//! let c_rgb = Color::new_rgb(255, 42, 90);
+//!
+//! let hsl = HSL::from_json_string(r#"{
+//!     "hue": 346.47887323943667,
+//!     "saturation": 1.0,
+//!     "lightness": 0.5823529411764706
+//! }"#);
+//!
+//! let hsv = HSV::new(346.47887323943667, 0.8352941176470587, 1.0);
+//!
+//! assert_eq!(c_rgb, hsl);
+//! assert_eq!(c_rgb, hsv);
+//! assert_eq!(hsl, hsv);
+//! ```
 
 
 /// Enumerable for currently supported color data structures
-pub mod color;
-
-
-/// Data structure for Red, Green, Blue encoded colors
 ///
 /// # Example
 ///
 /// ```rust
+/// use color_operators::color::Color;
 /// use color_operators::rgb::RGB;
 ///
-/// let rgb = RGB::new(255, 42, 90);
+/// let c_rgb = Color::new_rgb(255, 42, 90);
+///
+/// assert!(c_rgb.is_rgb());
+///
+/// let rgb: RGB = c_rgb.into();
 ///
 /// assert_eq!(rgb.get("red"), Ok(255));
 /// assert_eq!(rgb.get("green"), Ok(42));
 /// assert_eq!(rgb.get("blue"), Ok(90));
 /// ```
-pub mod rgb;
+pub mod color;
 
 
 /// Data structure for Hue, Saturation, Lightness encoded colors
@@ -56,4 +80,20 @@ pub mod hsl;
 /// assert_eq!(hsv.get("value"), Ok(0.5));
 /// ```
 pub mod hsv;
+
+
+/// Data structure for Red, Green, Blue encoded colors
+///
+/// # Example
+///
+/// ```rust
+/// use color_operators::rgb::RGB;
+///
+/// let rgb = RGB::new(255, 42, 90);
+///
+/// assert_eq!(rgb.get("red"), Ok(255));
+/// assert_eq!(rgb.get("green"), Ok(42));
+/// assert_eq!(rgb.get("blue"), Ok(90));
+/// ```
+pub mod rgb;
 
