@@ -1,9 +1,6 @@
 #!/usr/bin/env rust
 
 
-//! TODO: Add example tests
-
-
 use std::ops::Add;
 
 

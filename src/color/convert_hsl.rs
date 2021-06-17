@@ -1,9 +1,6 @@
 #!/usr/bin/env rust
 
 
-//! TODO: Add example tests
-
-
 use crate::color::Color;
 use crate::hsl::HSL;
 
