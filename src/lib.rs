@@ -1,5 +1,6 @@
 #!/usr/bin/env rust
 #![deny(clippy::all, missing_docs, unsafe_code)]
+#![allow(clippy::upper_case_acronyms, clippy::from_over_into, clippy::match_like_matches_macro)]
 
 
 //! A library for converting, comparing, and preforming arithmetic on colors
