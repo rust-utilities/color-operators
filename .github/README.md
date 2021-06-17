@@ -71,7 +71,7 @@ This repository is a Rust library, define it as a dependency within a project `C
 
 ```toml
 [dependencies]
-color-operators = "0.0.1"
+color-operators = "0.0.3"
 ```
 
 
@@ -120,7 +120,7 @@ Add this crate as a dependency...
 
 ```toml
 [dependencies]
-color-operators = "0.0.1"
+color-operators = "0.0.3"
 argparse = "0.2.2"
 ```
 
