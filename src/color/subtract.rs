@@ -52,9 +52,25 @@ impl Sub for Color {
 }
 
 
+/// Converts right side from `HSL` to `Color` prior to arithmetic
 impl Sub<HSL> for Color {
     type Output = Self;
 
+    /// # Example
+    ///
+    /// ```rust
+    /// use color_operators::color::Color;
+    /// use color_operators::hsl::HSL;
+    /// use color_operators::rgb::RGB;
+    ///
+    /// let left = Color::new_rgb(24, 0, 0);
+    /// let right = HSL::new(0.0, 1.0, 0.047058823529411764);
+    ///
+    /// let result = left - right;
+    ///
+    /// let expected: Color = RGB::new(0, 0, 0).into();
+    /// assert_eq!(result, expected);
+    /// ```
     fn sub(self, other: HSL) -> Self::Output {
         match self {
             Color::HSL(v) => Self::HSL(v - other),
@@ -65,9 +81,25 @@ impl Sub<HSL> for Color {
 }
 
 
+/// Converts right side from `HSV` to `Color` prior to arithmetic
 impl Sub<HSV> for Color {
     type Output = Self;
 
+    /// # Example
+    ///
+    /// ```rust
+    /// use color_operators::color::Color;
+    /// use color_operators::hsv::HSV;
+    /// use color_operators::rgb::RGB;
+    ///
+    /// let left = Color::new_rgb(24, 0, 0);
+    /// let right = HSV::new(0.0, 1.0, 0.09411764705882353);
+    ///
+    /// let result = left - right;
+    ///
+    /// let expected: Color = RGB::new(0, 0, 0).into();
+    /// assert_eq!(result, expected);
+    /// ```
     fn sub(self, other: HSV) -> Self::Output {
         match self {
             Color::HSL(v) => Self::HSL(v - other),
@@ -78,9 +110,24 @@ impl Sub<HSV> for Color {
 }
 
 
+/// Converts right side from `RGB` to `Color` prior to arithmetic
 impl Sub<RGB> for Color {
     type Output = Self;
 
+    /// # Example
+    ///
+    /// ```rust
+    /// use color_operators::color::Color;
+    /// use color_operators::rgb::RGB;
+    ///
+    /// let left = Color::new_rgb(24, 0, 0);
+    /// let right = RGB::new(24, 0, 0);
+    ///
+    /// let result = left - right;
+    ///
+    /// let expected: Color = RGB::new(0, 0, 0).into();
+    /// assert_eq!(result, expected);
+    /// ```
     fn sub(self, other: RGB) -> Self::Output {
         match self {
             Color::HSL(v) => Self::HSL(v - other),
