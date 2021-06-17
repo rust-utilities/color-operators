@@ -5,7 +5,10 @@ use crate::hsl::HSL;
 
 
 /// Convert from tuple of 64-bit precision floating point numbers
-impl From <(f64, f64, f64)> for HSL {
+impl<T> From <(T, T, T)> for HSL
+where
+    T: Into<f64> + Copy
+{
     /// # Example
     ///
     /// ```rust
@@ -18,12 +21,9 @@ impl From <(f64, f64, f64)> for HSL {
     /// assert_eq!(hsl.get("saturation"), Ok(1.0));
     /// assert_eq!(hsl.get("lightness"), Ok(0.5823529411764706));
     /// ```
-    fn from(tuple: (f64, f64, f64)) -> Self {
-        let (mut hue, mut saturation, mut lightness) = tuple;
-        hue = hue.min(360.0).max(0.0);
-        saturation = saturation.min(1.0).max(0.0);
-        lightness = lightness.min(1.0).max(0.0);
-        Self { hue, saturation, lightness }
+    fn from(tuple: (T, T, T)) -> Self {
+        let (hue, saturation, lightness) = tuple;
+        Self::new(hue, saturation, lightness)
     }
 }
 

@@ -5,7 +5,10 @@ use crate::hsv::HSV;
 
 
 /// Convert from tuple of 64-bit precision floating point numbers
-impl From <(f64, f64, f64)> for HSV {
+impl<T> From <(T, T, T)> for HSV
+where
+    T: Into<f64> + Copy
+{
     /// # Example
     ///
     /// ```rust
@@ -18,12 +21,9 @@ impl From <(f64, f64, f64)> for HSV {
     /// assert_eq!(hsv.get("saturation"), Ok(1.0));
     /// assert_eq!(hsv.get("value"), Ok(0.5823529411764706));
     /// ```
-    fn from(tuple: (f64, f64, f64)) -> Self {
-        let (mut hue, mut saturation, mut value) = tuple;
-        hue = hue.min(360.0).max(0.0);
-        saturation = saturation.min(1.0).max(0.0);
-        value = value.min(1.0).max(0.0);
-        Self { hue, saturation, value }
+    fn from(tuple: (T, T, T)) -> Self {
+        let (hue, saturation, value) = tuple;
+        Self::new(hue, saturation, value)
     }
 }
 

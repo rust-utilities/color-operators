@@ -5,7 +5,10 @@ use crate::hsv::HSV;
 
 
 /// Convert from vector of 64-bit precision floating point numbers
-impl From<Vec<f64>> for HSV {
+impl<T> From<Vec<T>> for HSV
+where
+    T: Into<f64> + Copy
+{
     /// # Example
     ///
     /// ```rust
@@ -18,11 +21,11 @@ impl From<Vec<f64>> for HSV {
     /// assert_eq!(hsv.get("saturation"), Ok(1.0));
     /// assert_eq!(hsv.get("value"), Ok(0.5823529411764706));
     /// ```
-    fn from(vector: Vec<f64>) -> Self {
-        let hue = vector[0].min(360.0).max(0.0);
-        let saturation = vector[1].min(1.0).max(0.0);
-        let value = vector[2].min(1.0).max(0.0);
-        Self { hue, saturation, value }
+    fn from(vector: Vec<T>) -> Self {
+        let hue = vector[0];
+        let saturation = vector[1];
+        let value = vector[2];
+        Self::new(hue, saturation, value)
     }
 }
 

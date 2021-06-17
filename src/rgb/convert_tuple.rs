@@ -5,7 +5,10 @@ use crate::rgb::RGB;
 
 
 /// Convert from tuple of unsigned 8-bit integers
-impl From<(u8, u8, u8)> for RGB {
+impl<T> From<(T, T, T)> for RGB
+where
+    T: Into<u8> + Copy
+{
     /// # Example
     ///
     /// ```rust
@@ -18,9 +21,9 @@ impl From<(u8, u8, u8)> for RGB {
     /// assert_eq!(rgb.get("green"), Ok(42));
     /// assert_eq!(rgb.get("blue"), Ok(90));
     /// ```
-    fn from(tuple: (u8, u8, u8)) -> Self {
-        let (red, green, blue) = tuple;
-        Self { red, green, blue }
+    fn from(tuple: (T, T, T)) -> Self {
+        let ( red, green, blue ) = tuple;
+        Self::new(red, green, blue)
     }
 }
 

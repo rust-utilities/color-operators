@@ -5,7 +5,10 @@ use crate::rgb::RGB;
 
 
 /// Convert from array of unsigned 8-bit integers
-impl From<[u8; 3]> for RGB {
+impl<T> From<[T; 3]> for RGB
+where
+    T: Into<u8> + Copy
+{
     /// # Example
     ///
     /// ```rust
@@ -18,11 +21,11 @@ impl From<[u8; 3]> for RGB {
     /// assert_eq!(rgb.get("green"), Ok(42));
     /// assert_eq!(rgb.get("blue"), Ok(90));
     /// ```
-    fn from(array: [u8; 3]) -> Self {
+    fn from(array: [T; 3]) -> Self {
         let red = array[0];
         let green = array[1];
         let blue = array[2];
-        Self { red, green, blue }
+        Self::new(red, green, blue)
     }
 }
 

@@ -5,7 +5,10 @@ use crate::hsl::HSL;
 
 
 /// Convert from vector of 64-bit precision floating point numbers
-impl From<Vec<f64>> for HSL {
+impl<T> From<Vec<T>> for HSL
+where
+    T: Into<f64> + Copy
+{
     /// # Example
     ///
     /// ```rust
@@ -18,11 +21,11 @@ impl From<Vec<f64>> for HSL {
     /// assert_eq!(hsl.get("saturation"), Ok(1.0));
     /// assert_eq!(hsl.get("lightness"), Ok(0.5823529411764706));
     /// ```
-    fn from(vector: Vec<f64>) -> Self {
-        let hue = vector[0].min(360.0).max(0.0);
-        let saturation = vector[1].min(1.0).max(0.0);
-        let lightness = vector[2].min(1.0).max(0.0);
-        Self { hue, saturation, lightness }
+    fn from(vector: Vec<T>) -> Self {
+        let hue = vector[0];
+        let saturation = vector[1];
+        let lightness = vector[2];
+        Self::new(hue, saturation, lightness)
     }
 }
 

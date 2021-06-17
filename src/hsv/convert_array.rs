@@ -5,7 +5,10 @@ use crate::hsv::HSV;
 
 
 /// Convert from array of 64-bit precision floating point numbers
-impl From<[f64; 3]> for HSV {
+impl<T> From<[T; 3]> for HSV
+where
+    T: Into<f64> + Copy
+{
     /// # Example
     ///
     /// ```rust
@@ -18,11 +21,11 @@ impl From<[f64; 3]> for HSV {
     /// assert_eq!(hsv.get("saturation"), Ok(1.0));
     /// assert_eq!(hsv.get("value"), Ok(0.5823529411764706));
     /// ```
-    fn from(array: [f64; 3]) -> Self {
-        let hue = array[0].min(360.0).max(0.0);
-        let saturation = array[1].min(1.0).max(0.0);
-        let value = array[2].min(1.0).max(0.0);
-        Self { hue, saturation, value }
+    fn from(array: [T; 3]) -> Self {
+        let hue = array[0];
+        let saturation = array[1];
+        let value = array[2];
+        Self::new(hue, saturation, value)
     }
 }
 

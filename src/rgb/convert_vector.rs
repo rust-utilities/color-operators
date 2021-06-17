@@ -5,7 +5,10 @@ use crate::rgb::RGB;
 
 
 /// Convert from vector of unsigned 8-bit integers
-impl From<Vec<u8>> for RGB {
+impl<T> From<Vec<T>> for RGB
+where
+    T: Into<u8> + Copy
+{
     /// # Example
     ///
     /// ```rust
@@ -18,11 +21,11 @@ impl From<Vec<u8>> for RGB {
     /// assert_eq!(rgb.get("green"), Ok(42));
     /// assert_eq!(rgb.get("blue"), Ok(90));
     /// ```
-    fn from(vector: Vec<u8>) -> Self {
+    fn from(vector: Vec<T>) -> Self {
         let red = vector[0];
         let green = vector[1];
         let blue = vector[2];
-        Self { red, green, blue }
+        Self::new(red, green, blue)
     }
 }
 
