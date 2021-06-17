@@ -13,24 +13,24 @@ Color data structures, converters, comparators, and arithmetic operators
 ---
 
 
-- [:arrow_up: Top of Document][heading__top]
+- [&#x2B06; Top of Document][heading__top]
 
-- [:building_construction: Requirements][heading__requirements]
+- [&#x1F3D7; Requirements][heading__requirements]
 
-- [:zap: Quick Start][heading__quick_start]
+- [&#9889; Quick Start][heading__quick_start]
 
 - [&#x1F9F0; Usage][heading__usage]
 
 - [&#x1F5D2; Notes][heading__notes]
 
-- [:chart_with_upwards_trend: Contributing][heading__contributing]
+- [&#x1F4C8; Contributing][heading__contributing]
 
-  - [:trident: Forking][heading__forking]
-  - [:currency_exchange: Sponsor][heading__sponsor]
+  - [&#x1F531; Forking][heading__forking]
+  - [&#x1F4B1; Sponsor][heading__sponsor]
 
-- [:card_index: Attribution][heading__attribution]
+- [&#x1F4C7; Attribution][heading__attribution]
 
-- [:balance_scale: Licensing][heading__license]
+- [&#x2696; Licensing][heading__license]
 
 
 ---
@@ -49,7 +49,7 @@ This repository requires [Rust][rust_home] language/compiler to build from sourc
 As of last update to this ReadMe file, the recommended method of installing Rust is via the installer script...
 
 
-```Bash
+```bash
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
 
@@ -105,7 +105,7 @@ ______
 Create a project if one does not already exist...
 
 
-```Bash
+```bash
 cargo init hsl-to-rgb
 
 cd hsl-to-rgb
@@ -134,7 +134,7 @@ Write code that utilizes this crate...
 **`src/main.rs`**
 
 
-```Rust
+```rust
 extern crate argparse;
 use argparse::{ ArgumentParser, StoreOption };
 
@@ -191,7 +191,7 @@ fn main() {
 Test conversion with various options...
 
 
-```Bash
+```bash
 cargo run -- -r 255
 #> HSL { hue: 0.0, saturation: 1.0, lightness: 0.5 }
 
@@ -230,7 +230,7 @@ This repository may not be feature complete and/or fully functional, Pull Reques
 Examples may be found within the `examples/` directory and run to test conversions and other features;
 
 
-```Bash
+```bash
 cargo run --example rgb-to-hsl -- -r 255
 #> HSL { hue: 0.0, saturation: 1.0, lightness: 0.5 }
 
@@ -289,7 +289,7 @@ Start making a [Fork][color_operators__fork_it] of this repository to an account
 - Add remote for fork URL. The URL syntax is _`git@github.com:<NAME>/<REPO>.git`_...
 
 
-```Bash
+```bash
 cd ~/git/hub/rust-utilities/color-operators
 
 git remote add fork git@github.com:<NAME>/color-operators.git
@@ -299,7 +299,7 @@ git remote add fork git@github.com:<NAME>/color-operators.git
 - Commit your changes and push to your fork, eg. to fix an issue...
 
 
-```Bash
+```bash
 cd ~/git/hub/rust-utilities/color-operators
 
 
@@ -330,7 +330,7 @@ git push fork main
 **Tip** check for `TODO` lines for known arias that may cause issues, as well as portions of code that are excellent targets for new Pull Requests...
 
 
-```Bash
+```bash
 grep -C3 -ri 'todo' src/**/*.rs
 ```
 
