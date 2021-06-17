@@ -1,9 +1,6 @@
 #!/usr/bin/env rust
 
 
-//! TODO: Add example tests
-
-
 use crate::hsl::HSL;
 use crate::hsv::HSV;
 use crate::rgb::RGB;
@@ -103,31 +100,6 @@ impl Color {
         Self::RGB(RGB::new(red, green, blue))
     }
 
-    /// Attempts to rotate hue by some amount of degrees
-    ///
-    /// **Note** this method uses `HSL::rotate_hue` or `HSV::rotate_hue` internally
-    pub fn rotate_hue<T>(&self, amount: T) -> Self
-    where
-        T: Into<f64>
-    {
-        match self {
-            Color::HSL(v) => Color::HSL(v.rotate_hue(amount)),
-            Color::HSV(v) => Color::HSV(v.rotate_hue(amount)),
-            Color::RGB(v) => Color::RGB(v.rotate_hue(amount)),
-        }
-    }
-
-    /// Attempts to this color with another
-    ///
-    /// **Note** wraps on overflow values
-    pub fn rotate_rgb(&self, other: Self) -> Self {
-        match self {
-            Color::HSL(v) => Color::HSL(v.rotate_rgb(other.into())),
-            Color::HSV(v) => Color::HSV(v.rotate_rgb(other.into())),
-            Color::RGB(v) => Color::RGB(v.rotate_rgb(other.into())),
-        }
-    }
-
     /// Check if `Color` contains a `HSL` data structure
     ///
     /// # Example
@@ -140,7 +112,7 @@ impl Color {
     /// ```
     pub fn is_hsl(&self) -> bool {
         match self {
-            Color::HSL(_) => true,
+            Self::HSL(_) => true,
             _ => false,
         }
     }
@@ -157,7 +129,7 @@ impl Color {
     /// ```
     pub fn is_hsv(&self) -> bool {
         match self {
-            Color::HSV(_) => true,
+            Self::HSV(_) => true,
             _ => false,
         }
     }
@@ -174,8 +146,139 @@ impl Color {
     /// ```
     pub fn is_rgb(&self) -> bool {
         match self {
-            Color::RGB(_) => true,
+            Self::RGB(_) => true,
             _ => false,
+        }
+    }
+
+    /// Returns hexadecimal string representation of contained `Color` values
+    ///
+    /// # Example
+    ///
+    /// ```rust
+    /// use color_operators::color::Color;
+    ///
+    /// let c_rgb = Color::new_rgb(255, 255, 255);
+    /// let hex = c_rgb.to_hex_string();
+    ///
+    /// assert_eq!(hex, "FFFFFF");
+    /// ```
+    pub fn to_hex_string(&self) -> String {
+        match self {
+            Self::HSL(v) => v.to_hex_string(),
+            Self::HSV(v) => v.to_hex_string(),
+            Self::RGB(v) => v.to_hex_string(),
+        }
+    }
+
+    /// Returns parsed JSON string for color key/value pares
+    ///
+    /// **Note** defaults to `Color::RGB` with `0` for all values
+    ///
+    /// # Example
+    ///
+    /// ```rust
+    /// use color_operators::color::Color;
+    ///
+    /// let c_hsl = Color::from_json_string(r#"{
+    ///     "hue": 120.0,
+    ///     "saturation": 1.0,
+    ///     "lightness": 0.75
+    /// }"#);
+    ///
+    /// assert!(c_hsl.is_hsl());
+    ///
+    /// let c_hsv = Color::from_json_string(r#"{
+    ///     "hue": 120.0,
+    ///     "saturation": 0.5,
+    ///     "value": 1.0
+    /// }"#);
+    ///
+    /// assert!(c_hsv.is_hsv());
+    ///
+    /// let c_rgb = Color::from_json_string(r#"{
+    ///     "red": 255,
+    ///     "green": 42,
+    ///     "blue": 90
+    /// }"#);
+    ///
+    /// assert!(c_rgb.is_rgb());
+    /// ```
+    pub fn from_json_string<S>(string: S) -> Self
+    where
+        S: Into<String>
+    {
+        let object = match json::parse(&string.into()) {
+            Ok(data) => data,
+            Err(e) => {
+                println!("Warning: ignoring error -> {:?}", e);
+                json::object!{
+                    "red": 0,
+                    "green": 0,
+                    "blue": 0,
+                }
+            }
+        };
+
+        if object.has_key("lightness") {
+            Self::from(HSL::from(object))
+        } else if object.has_key("value") {
+            Self::from(HSV::from(object))
+        } else {
+            Self::from(RGB::from(object))
+        }
+    }
+
+    /// Serializes contained data structure as JSON string
+    ///
+    /// # Example
+    ///
+    /// ```rust
+    /// use color_operators::color::Color;
+    ///
+    /// let c_rgb = Color::new_rgb(255, 42, 90);
+    /// let json_string = c_rgb.to_json_string();
+    ///
+    /// let object = json::object!{
+    ///     "red" => 255,
+    ///     "green" => 42,
+    ///     "blue" => 90
+    /// };
+    ///
+    /// let expected = json::stringify(object);
+    ///
+    /// assert_eq!(json_string, expected);
+    /// ```
+    pub fn to_json_string(&self) -> String {
+        match self {
+            Self::HSL(v) => v.to_json_string(),
+            Self::HSV(v) => v.to_json_string(),
+            Self::RGB(v) => v.to_json_string(),
+        }
+    }
+
+    /// Attempts to rotate hue by some amount of degrees
+    ///
+    /// **Note** this method uses `HSL::rotate_hue` or `HSV::rotate_hue` internally
+    pub fn rotate_hue<T>(&self, amount: T) -> Self
+    where
+        T: Into<f64>
+    {
+        match self {
+            Self::HSL(v) => Self::HSL(v.rotate_hue(amount)),
+            Self::HSV(v) => Self::HSV(v.rotate_hue(amount)),
+            Self::RGB(v) => Self::RGB(v.rotate_hue(amount)),
+        }
+    }
+
+    /// Attempts to rotate this color with another
+    ///
+    /// **Note** wraps on overflow values
+    pub fn rotate_rgb(&self, other: Self) -> Self {
+        match self {
+            Self::HSL(v) => Self::HSL(v.rotate_rgb(other.into())),
+            Self::HSV(v) => Self::HSV(v.rotate_rgb(other.into())),
+            Self::RGB(v) => Self::RGB(v.rotate_rgb(other.into())),
         }
     }
 }
