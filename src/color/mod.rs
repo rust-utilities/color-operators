@@ -43,7 +43,7 @@ pub enum Color {
 
 
 impl Color {
-    /// Initializes and warps instance of `HSL` within `Color`
+    /// Initializes and wrapps instance of `HSL` within `Color`
     ///
     /// # Example
     ///
@@ -63,7 +63,7 @@ impl Color {
         Self::HSL(HSL::new(hue, saturation, lightness))
     }
 
-    /// Initializes and warps instance of `HSV` within `Color`
+    /// Initializes and wrapps instance of `HSV` within `Color`
     ///
     /// # Example
     ///
@@ -83,7 +83,7 @@ impl Color {
         Self::HSV(HSV::new(hue, saturation, value))
     }
 
-    /// Initializes and warps instance of `RGB` within `Color`
+    /// Initializes and wrapps instance of `RGB` within `Color`
     ///
     /// # Example
     ///
